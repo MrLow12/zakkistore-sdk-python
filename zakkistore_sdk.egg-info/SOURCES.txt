@@ -1,0 +1,9 @@
+README.md
+setup.py
+zakkistore_sdk/__init__.py
+zakkistore_sdk/client.py
+zakkistore_sdk.egg-info/PKG-INFO
+zakkistore_sdk.egg-info/SOURCES.txt
+zakkistore_sdk.egg-info/dependency_links.txt
+zakkistore_sdk.egg-info/requires.txt
+zakkistore_sdk.egg-info/top_level.txt
