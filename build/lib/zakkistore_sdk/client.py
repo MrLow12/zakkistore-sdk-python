@@ -212,7 +212,7 @@ class ZakkiStore:
         })
 
     def tabung(self, jumlah):
-        """Menabung / deposit saldo dari aplikasi zakki store ke Bank Zakki"""
+        """Menabung / deposit saldo dari aplikasi utama (BukaOlshop) ke Bank Zakki"""
         if not self.pin:
             raise RuntimeError("[ZakkiStore SDK Error] PIN transaksi diperlukan untuk melakukan transaksi tabung.")
         payload = {
@@ -294,12 +294,10 @@ class ZakkiStore:
     # --- 5. REWARD KOMPUTASI & UTILITY ---
     # ==========================================================
 
-    def cekmining(self, idmining):
-        """Melihat detail status transaksi mining koin spesifik berdasarkan ID"""
-        if not idmining:
-            raise ValueError('Parameter idmining wajib diisi.')
+    def cekmining(self):
+        """Melihat status koin mining global"""
         return self._request('/cekmining', 'GET', {
-            "idmining": str(idmining).strip()
+            "token": self.token
         })
 
     def mymining(self):
@@ -307,32 +305,6 @@ class ZakkiStore:
         return self._request('/mymining', 'GET', {
             "token": self.token
         })
-
-    def mining_start(self):
-        """Minta Tantangan (Challenge) Mining Baru"""
-        return self._request('/mining/start', 'GET', {
-            "token": self.token
-        })
-
-    def miningStart(self):
-        """Alias camelCase untuk mining_start"""
-        return self.mining_start()
-
-    def mining_submit(self, nonce, signature):
-        """Submit Jawaban Mining (Proof of Work)"""
-        if nonce is None:
-            raise ValueError('Parameter nonce wajib disertakan.')
-        if not signature:
-            raise ValueError('Parameter signature wajib disertakan.')
-        return self._request('/mining/submit', 'POST', {
-            "token": self.token,
-            "nonce": nonce,
-            "signature": signature
-        })
-
-    def miningSubmit(self, nonce, signature):
-        """Alias camelCase untuk mining_submit"""
-        return self.mining_submit(nonce, signature)
 
     def cekgacha(self):
         """Memeriksa statistik poin, keuntungan, dan kemenangan gacha member"""
@@ -364,98 +336,3 @@ class ZakkiStore:
     def status(self):
         """Memantau kondisi kesehatan mesin, metrik financial, dan load CPU"""
         return self._request('/status', 'GET')
-
-    # ==========================================================
-    # --- 6. METODE INTEGRASI BARU ---
-    # ==========================================================
-
-    def set_callback(self, site):
-        """Mendaftarkan URL callback HTTPS untuk menerima notifikasi otomatis"""
-        return self._request('/setcallback', 'GET', {
-            "token": self.token,
-            "site": str(site).strip()
-        })
-
-    def setcallback(self, site):
-        """Alias camelCase untuk set_callback"""
-        return self.set_callback(site)
-
-    def del_callback(self):
-        """Menghapus URL callback yang terdaftar"""
-        return self._request('/delcallback', 'GET', {
-            "token": self.token
-        })
-
-    def delcallback(self):
-        """Alias camelCase untuk del_callback"""
-        return self.del_callback()
-
-    def set_notif_bot(self, telegram_id):
-        """Mendaftarkan ID Telegram untuk menerima laporan otomatis transaksi"""
-        return self._request('/setnotifbot', 'GET', {
-            "token": self.token,
-            "id": str(telegram_id).strip()
-        })
-
-    def setnotifbot(self, telegram_id):
-        """Alias camelCase untuk set_notif_bot"""
-        return self.set_notif_bot(telegram_id)
-
-    def del_notif_bot(self):
-        """Menghapus ID Telegram yang terdaftar untuk notifikasi"""
-        return self._request('/delnotifbot', 'GET', {
-            "token": self.token
-        })
-
-    def delnotifbot(self):
-        """Alias camelCase untuk del_notif_bot"""
-        return self.del_notif_bot()
-
-    def check_transfer(self, idtransfer):
-        """Memverifikasi status transfer saldo antar member berdasarkan ID"""
-        return self._request('/checktransfer', 'GET', {
-            "idtransfer": str(idtransfer).strip()
-        })
-
-    def checktransfer(self, idtransfer):
-        """Alias camelCase untuk check_transfer"""
-        return self.check_transfer(idtransfer)
-
-    def my_transfer(self, transfer_type="all"):
-        """Melihat riwayat transfer saldo masuk/keluar"""
-        return self._request('/mytransfer', 'GET', {
-            "token": self.token,
-            "type": str(transfer_type).strip()
-        })
-
-    def mytransfer(self, transfer_type="all"):
-        """Alias camelCase untuk my_transfer"""
-        return self.my_transfer(transfer_type)
-
-    def my_topup(self):
-        """Mengambil daftar riwayat topup sukses"""
-        return self._request('/mytopup', 'GET', {
-            "token": self.token
-        })
-
-    def mytopup(self):
-        """Alias camelCase untuk my_topup"""
-        return self.my_topup()
-
-    def cek_my_ip(self):
-        """Mengecek IP publik server Anda yang terdeteksi gateway"""
-        return self._request('/cekmyip', 'GET')
-
-    def cekmyip(self):
-        """Alias camelCase untuk cek_my_ip"""
-        return self.cek_my_ip()
-
-    def cek_ip(self, ip):
-        """Mengecek status keamanan IP spesifik"""
-        return self._request('/cekip', 'GET', {
-            "ip": str(ip).strip()
-        })
-
-    def cekip(self, ip):
-        """Alias camelCase untuk cek_ip"""
-        return self.cek_ip(ip)
