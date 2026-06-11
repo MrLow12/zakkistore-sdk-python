@@ -84,6 +84,12 @@ class ZakkiStore:
             "idtopup": idtopup
         })
 
+    def cektopup2(self, idtopup):
+        """Mendapatkan URL gambar struk digital dinamis (hologram receipt) berformat PNG"""
+        import urllib.parse
+        encoded_id = urllib.parse.quote(idtopup)
+        return f"{self.base_url}/cektopup2?idtopup={encoded_id}"
+
     def cancel(self, id_transaksi=None, all_pending=False):
         """
         Mengelola pembatalan transaksi pending (Mendukung 3 Mode Operasi)

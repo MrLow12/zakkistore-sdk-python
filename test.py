@@ -29,7 +29,7 @@ def test_sdk_initialization():
         
         # Validasi eksistensi metode utama
         methods = [
-            "topup", "cektopup", "cancel",
+            "topup", "cektopup", "cektopup2", "cancel",
             "listkode", "h2h", "cekh2h", "myh2h",
             "checkbank", "checkname", "transfer", "tabung", "tarik", "checkmutasi",
             "noktelStok", "noktelBuy", "noktelGetOtp", "noktelCancel", "noktelHistory",
